@@ -9,5 +9,5 @@ func main() {
 		x2 = x1
 		day--
 	}
-	fmt.Printf("the total is %d\n", x1)
+	fmt.Printf("the total is %d\n", x1) 
 }
