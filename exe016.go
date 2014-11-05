@@ -1,15 +1,15 @@
 package main
 
 import (
-  "bufio"
-  "os"
-  "fmt"
+	"bufio"
+	"fmt"
+	"os"
 )
 
 func main() {
-	var i,j,k,l int = 0,0,0,0
+	var i, j, k, l int = 0, 0, 0, 0
 	reader := bufio.NewReader(os.Stdin)
-	input,_ := reader.ReadString('\n')
+	input, _ := reader.ReadString('\n')
 	for _, rune := range input {
 		switch {
 		case (rune >= 'A' && rune <= 'Z'):
@@ -24,5 +24,5 @@ func main() {
 			l++
 		}
 	}
-	fmt.Printf("all in all: char=%d space=%d digit=%d others=%d",i,j,k,l)
+	fmt.Printf("all in all: char=%d space=%d digit=%d others=%d", i, j, k, l)
 }

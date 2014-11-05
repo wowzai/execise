@@ -26,5 +26,5 @@ func out(n, x int) {
 	}
 	// x % (10^n) / (10^n-1)
 	r := x % int(math.Pow10(n)) / int(math.Pow10(n-1))
-	fmt.Printf("%d",r)
+	fmt.Printf("%d", r)
 }

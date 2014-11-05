@@ -1,4 +1,4 @@
-package main 
+package main
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ func main() {
 		fmt.Println("exe027.exe n")
 		return
 	}
-	n,err := strconv.Atoi(os.Args[1])
+	n, err := strconv.Atoi(os.Args[1])
 	if err != nil {
 		fmt.Println(err.Error())
 		return

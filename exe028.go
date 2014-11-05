@@ -10,11 +10,11 @@ func age(n int) int {
 	if n == 1 {
 		return 10
 	} else {
-		return 2 + age(n - 1)
+		return 2 + age(n-1)
 	}
 }
 
 func main() {
 	age := age(5)
-	fmt.Printf("第五个人的年龄为%d\n",age)
+	fmt.Printf("第五个人的年龄为%d\n", age)
 }

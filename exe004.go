@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	var y,m,d,days int = 0,0,0,0
-	fmt.Scanf("%d%d%d\n",&y,&m,&d)
-	fmt.Printf("%d年%d月%d日",y,m,d)
+	var y, m, d, days int = 0, 0, 0, 0
+	fmt.Scanf("%d%d%d\n", &y, &m, &d)
+	fmt.Printf("%d年%d月%d日", y, m, d)
 	switch m {
 	case 12:
 		days += d
@@ -57,5 +57,5 @@ func main() {
 	case 1:
 		days += d
 	}
-	fmt.Printf("是今年的第%d天!\n",days)
+	fmt.Printf("是今年的第%d天!\n", days)
 }

@@ -11,21 +11,21 @@ func oneresult() int {
 	return 1
 }
 
-func tworesult() (int,bool) {
+func tworesult() (int, bool) {
 	fmt.Println("存在2个返回值的函数")
-	return 2,true
+	return 2, true
 }
 
-func threeresult() (int,bool,bool){
+func threeresult() (int, bool, bool) {
 	fmt.Println("存在3个返回值的函数")
-	return 3,false,true
+	return 3, false, true
 }
 
 func main() {
 	noresult()
 	ret := oneresult()
-	fmt.Println("存在1个返回值的函数",ret)
-	_,b := tworesult()
-	fmt.Println("存在2个返回值的函数",b)
-	_,_,_ = threeresult()
+	fmt.Println("存在1个返回值的函数", ret)
+	_, b := tworesult()
+	fmt.Println("存在2个返回值的函数", b)
+	_, _, _ = threeresult()
 }

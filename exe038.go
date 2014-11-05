@@ -10,8 +10,8 @@ func main() {
 
 	for i := 0; i < max; i++ {
 		for j := 0; j < max; j++ {
-			fmt.Printf("array[%d][%d]=",i,j)
-			fmt.Scanf("%d\n",&array[i][j])
+			fmt.Printf("array[%d][%d]=", i, j)
+			fmt.Scanf("%d\n", &array[i][j])
 		}
 	}
 	for i := 0; i < max; i++ {

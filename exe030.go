@@ -6,7 +6,7 @@ import (
 )
 
 func match(x int) bool {
-	if x / 10000 <= 0 {
+	if x/10000 <= 0 {
 		fmt.Printf("您输入的五位数不正确\n")
 		return false
 	}
@@ -24,11 +24,11 @@ func match(x int) bool {
 func main() {
 	var x int
 	fmt.Printf("请输入一个5位数：")
-	fmt.Scanf("%d",&x)
+	fmt.Scanf("%d", &x)
 	match := match(x)
 	if match {
-		fmt.Printf("%d是一个回文数\n",x)
+		fmt.Printf("%d是一个回文数\n", x)
 	} else {
-		fmt.Printf("%d不是一个回文数\n",x)
+		fmt.Printf("%d不是一个回文数\n", x)
 	}
 }

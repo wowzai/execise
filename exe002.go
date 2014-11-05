@@ -10,9 +10,9 @@ func main() {
 	var i float32 = 0.0
 	var bonus float32 = 0.0
 	fmt.Print("输入利润：")
-	fmt.Scanf("%f\n",&i)
+	fmt.Scanf("%f\n", &i)
 	switch {
-    // fallthrough 需要显示的写出来，要不然golang
+	// fallthrough 需要显示的写出来，要不然golang
 	// 在执行满足的第一个条件后面的语句完后直接跳出
 	// switch
 	case i > 1000000:
