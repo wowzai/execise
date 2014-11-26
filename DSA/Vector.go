@@ -83,6 +83,62 @@ func (v *Vector) Deduplicate() {
 	}
 }
 
+func (v *Vector) bubbleSort(lo, hi int) bool {
+	var sorted = true
+	for i := lo; i < hi; i++ {
+		if v.elems[i] > v.elems[i+1] {
+			sorted = false
+			v.elems[i], v.elems[i+1] = v.elems[i+1], v.elems[i]
+			/*
+				t := elems[i]
+				elems[i] = elems[i+1]
+				elems[i+1] = t
+			*/
+		}
+	}
+	return sorted
+}
+
+func (v *Vector) bubbleSort2(lo, hi int) int {
+	var last = lo
+	for i := lo; i < hi; i++ {
+		if v.elems[i] > v.elems[i+1] {
+			last = i + 1
+			v.elems[i], v.elems[i+1] = v.elems[i+1], v.elems[i]
+		}
+	}
+	return last
+}
+
+func (v *Vector) Sort() {
+	hi := v.lth - 1
+	for !v.bubbleSort(0, hi) {
+		hi--
+	}
+}
+
+func (v *Vector) Sort2() {
+	hi := v.lth - 1
+	for hi > 0 {
+		hi = v.bubbleSort2(0, hi)
+		fmt.Printf("hi:%d\n", hi)
+	}
+}
+
+//O(n) 只要遍历一次即可
+func (v *Vector) Uniquify() {
+	//v.Sort()
+	var lo, hi int
+	for lo, hi = 0, 0; hi < v.lth; hi++ {
+		if v.elems[lo] != v.elems[hi] {
+			lo++
+			v.elems[lo] = v.elems[hi]
+		}
+	}
+	lo++
+	v.lth = lo
+}
+
 type visit func(i *int) //传指针才能改变原先的值
 
 func (v *Vector) Traverse(vt visit) {
@@ -106,6 +162,140 @@ func (v *Vector) String() string {
 	}
 	str += fmt.Sprintf("\b]")
 	return str
+}
+
+func BinSearch(elems []int, elem, lo, hi int) int {
+	var mi int
+	for lo < hi {
+		mi = (lo + hi) >> 1
+		if elem < elems[mi] {
+			hi = mi
+		} else if elem > elems[mi] {
+			lo = mi + 1
+		} else {
+			return mi
+		}
+		/*
+			if elem == elems[mi] {
+				return mi
+			} else if elem < elems[mi] {
+				hi = mi
+				//recursion
+				//return BinSearch(elems, elem, lo, mi)
+			} else { //elem > elems[mi]
+				lo = mi + 1
+				//recursion
+				//return BinSearch(elems, elem, mi+1, hi)
+			}
+		*/
+	}
+	return -1
+}
+
+type Fib struct {
+	fib []int
+	idx int
+	lth int
+}
+
+func (f *Fib) get() int {
+	return f.fib[f.idx]
+}
+
+func (f *Fib) prev() {
+	f.idx--
+}
+
+func fib(lth int) (fib Fib) {
+	if lth < 1 {
+		fmt.Printf("lth:%d is err\n", lth)
+	}
+	elems := make([]int, lth)
+	if lth > 2 {
+		elems[0] = 1
+		elems[1] = 1
+		for i := 2; i < lth; i++ {
+			elems[i] = elems[i-1] + elems[i-2]
+		}
+	} else {
+		for i := 0; i < lth; i++ {
+			elems[i] = 1
+		}
+	}
+	fib.fib = elems
+	fib.idx = lth - 1
+	fib.lth = lth
+	return fib
+}
+
+func BinSearchB(elems []int, elem, lo, hi int) int {
+	var mi int
+	for hi-lo > 1 {
+		mi = (lo + hi) >> 1
+		if elem < elems[mi] {
+			hi = mi
+		} else {
+			lo = mi
+		}
+	}
+	if elems[lo] == elem {
+		return lo
+	} else {
+		return -1
+	}
+}
+
+func BinSearchC(elems []int, elem, lo, hi int) int {
+	var mi int
+	for lo < hi {
+		mi = (lo + hi) >> 1
+		if elem < elems[mi] {
+			hi = mi
+		} else {
+			lo = mi + 1
+		}
+	}
+	return lo - 1
+}
+
+func FibSearch(elems []int, elem, lo, hi int) int {
+	fib := fib(hi - lo)
+	var mi int
+	for lo < hi {
+		for hi-lo < fib.get() {
+			fib.prev()
+		}
+		mi = lo + fib.get() - 1 //黄金比例切分
+		if elem < elems[mi] {
+			hi = mi
+		} else if elem > elems[mi] {
+			lo = mi + 1
+		} else {
+			return mi
+		}
+	}
+	return -1
+}
+
+/*
+大规模：插值查找
+中规模：折半查找
+小规模：顺序查找
+*/
+
+func InsertSearch(elems []int, elem, lo, hi int) int {
+	var mi int
+	for lo < hi {
+		mi = lo + (hi-lo)*(elem-elems[lo])/(elems[hi]-elems[lo])
+		if elem < elems[mi] {
+			hi = mi
+		} else if elem > elems[mi] {
+			lo = mi + 1
+		} else {
+			return mi
+		}
+	}
+	return -1
 }
 
 func main() {
@@ -139,5 +329,45 @@ func main() {
 	fmt.Printf("vector:%s\n", v)
 	v.Traverse(double)
 	fmt.Printf("vector:%s\n", v)
+	elems = []int{3, 3, 3, 5, 5, 5, 5, 8, 8, 8, 8, 8, 13, 13, 13, 13, 13, 13}
+	v.elems = elems
+	v.lth = len(elems)
+	fmt.Printf("vector:%s\n", v)
+	v.Uniquify()
+	fmt.Printf("vector:%s\n", v)
+	elems = []int{2, 4, 5, 7, 8, 9, 12, 15}
+	fmt.Printf("vector:%v\n", elems)
+	index = BinSearch(elems, 8, 0, 7)
+	fmt.Printf("BinSearch index:%d\n", index)
+	index = BinSearch(elems, 1, 0, 7)
+	fmt.Printf("BinSearch index:%d\n", index)
+	index = FibSearch(elems, 8, 0, 7)
+	fmt.Printf("FibSearch index:%d\n", index)
+	index = FibSearch(elems, 1, 0, 7)
+	fmt.Printf("FibSearch index:%d\n", index)
+	index = BinSearchB(elems, 8, 0, 7)
+	fmt.Printf("BinSearchB index:%d\n", index)
+	index = BinSearchB(elems, 1, 0, 7)
+	fmt.Printf("BinSearchB index:%d\n", index)
+	index = BinSearchC(elems, 8, 0, 7)
+	fmt.Printf("BinSearchC index:%d\n", index)
+	index = BinSearchC(elems, 1, 0, 7)
+	fmt.Printf("BinSearchC index:%d\n", index)
+	index = InsertSearch(elems, 8, 0, 7)
+	fmt.Printf("InsertSearch index:%d\n", index)
+	index = InsertSearch(elems, 1, 0, 7)
+	fmt.Printf("InsertSearch index:%d\n", index)
+	elems = []int{22, 8, 7, 10, 19, 12, 3, 2, 11}
+	v.elems = elems
+	v.lth = len(elems)
+	fmt.Printf("before sort vector:%v\n", elems)
+	v.Sort()
+	fmt.Printf("after sort vector:%v\n", elems)
+	elems = []int{1, 2, 3, 4, 8, 7, 10, 19, 12, 11}
+	v.elems = elems
+	v.lth = len(elems)
+	fmt.Printf("before sort2 vector:%v\n", elems)
+	v.Sort2()
+	fmt.Printf("after sort2 vector:%v\n", elems)
 
 }
